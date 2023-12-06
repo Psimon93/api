@@ -12,6 +12,11 @@ function App() {
   const [userInfo, setUserInfo] = useState([]);
   const [userRepo, setUserRepo] = useState([]);
 
+  function reset() {
+    setUserInfo([]);
+    setUserRepo([]);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(url);
@@ -34,7 +39,7 @@ function App() {
       <RenderUser userInfo={userInfo} />
       {userRepo.length !== 0 && <TitleClass title="Repository list:" />}
       <RenderRepo userRepo={userRepo} />
-      <button onClick={() => setUrl("")}>Reset</button>
+      <button onClick={() => reset()}>Reset</button>
     </div>
   );
 }

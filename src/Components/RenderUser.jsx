@@ -1,4 +1,5 @@
 import Card from "react-bootstrap/Card";
+import PropTypes from "prop-types";
 
 export default function RenderUser({ userInfo }) {
   return (
@@ -12,3 +13,7 @@ export default function RenderUser({ userInfo }) {
     </Card>
   );
 }
+
+RenderUser.propTypes = {
+  userInfo: Array,
+};
