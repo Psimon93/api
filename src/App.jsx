@@ -3,7 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import Search from "./Components/Search";
 import RenderUser from "./Components/RenderUser";
-// import RenderUser from "./Components/RenderUser";
+import RenderRepo from "./Components/RenderRepo";
+import Button from "react-bootstrap/Button";
+import { TitleClass } from "./Components/TitleClass";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -18,19 +20,21 @@ function App() {
     };
     fetchData();
 
-    // const fetchData2 = async () => {
-    //   const result = await fetch(url);
-    //   const jsonResult = await result.json();
-    //   setUserRepo(jsonResult);
-    // };
-    // fetchData();
+    const fetchData2 = async () => {
+      const result = await fetch(url + "/repos");
+      const jsonResult = await result.json();
+      setUserRepo(jsonResult);
+    };
+    fetchData2();
   }, [url]);
 
   return (
     <div>
       <Search setUrl={setUrl} />
       <RenderUser userInfo={userInfo} />
-      {/* <RenderUser userInfo={userInfo} /> */}
+      {userRepo.length !== 0 && <TitleClass title="Repository list:" />}
+      <RenderRepo userRepo={userRepo} />
+      <button onClick={() => setUrl("")}>Reset</button>
     </div>
   );
 }
