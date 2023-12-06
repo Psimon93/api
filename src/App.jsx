@@ -17,29 +17,39 @@ function App() {
     setUserRepo([]);
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(url);
+  const fetchData = async () => {
+    const result = await fetch(url);
+    if (result.ok) {
       const jsonResult = await result.json();
       setUserInfo(jsonResult);
-    };
-    fetchData();
+    } else {
+      reset();
+    }
+  };
 
-    const fetchData2 = async () => {
-      const result = await fetch(url + "/repos");
+  const fetchData2 = async () => {
+    const result = await fetch(url + "/repos");
+    if (result.ok) {
       const jsonResult = await result.json();
       setUserRepo(jsonResult);
-    };
+    } else {
+      reset();
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
     fetchData2();
   }, [url]);
 
   return (
     <div>
       <Search setUrl={setUrl} />
+      {userRepo.length == 0 && <div> No result </div>}
       <RenderUser userInfo={userInfo} />
       {userRepo.length !== 0 && <TitleClass title="Repository list:" />}
       <RenderRepo userRepo={userRepo} />
-      <button onClick={() => reset()}>Reset</button>
+      <Button onClick={() => reset()}>Reset</Button>
     </div>
   );
 }
